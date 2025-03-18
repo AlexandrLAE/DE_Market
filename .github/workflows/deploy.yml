@@ -1,0 +1,25 @@
+name: Deploy_DE_Market
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy to VPS via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: 194.87.111.108
+        username: root
+        key: ${{ secrets.SSH_PRIVATE_KEY}}
+        script: |
+          cd /home/DE_Market
+          git pull origin main
+          docker-compose up -d
