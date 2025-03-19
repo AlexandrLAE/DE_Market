@@ -23,7 +23,4 @@ jobs:
           cd /home
           git pull origin main
           cd /home/DE_Market/airflow
-          sudo systemctl start docker.service
-          echo -e "AIRFLOW_UID=$(id -u)" > .env
-          sudo docker-compose up airflow-init
           sudo docker-compose up -d
