@@ -20,7 +20,7 @@ jobs:
         username: root
         key: ${{ secrets.SSH_PRIVATE_KEY}}
         script: |
-          cd /home
+          cd /home/DE_Market
           git pull origin main
           cd /home/DE_Market/airflow
           sudo docker-compose up -d
