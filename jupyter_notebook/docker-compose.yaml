@@ -1,0 +1,22 @@
+services:
+  jupyter:
+    container_name: jupyter_notebook
+    build:
+      context: ./jupyter_dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - "10000:8888"
+      - "4040:4040"
+    volumes:
+      - ./synthetic_data:/home/jovyan/source
+      - ../data_lake:/home/jovyan/data_lake
+      - ./jupyter_notebook:/home/jovyan
+    command: jupyter notebook --no-browser --NotebookApp.token='' --NotebookApp.password='' --ip='*' --allow-root
+    environment:
+      - GRANT_SUDO=yes
+    user: root
+    restart: always
+    networks:
+    - market
+networks:
+  market: 

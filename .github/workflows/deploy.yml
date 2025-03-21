@@ -22,9 +22,12 @@ jobs:
         script: |
           cd /home/DE_Market
           git pull origin main
-          cd /home/DE_Market/airflow
-          sudo systemctl start docker.service
-          echo -e "AIRFLOW_UID=$(id -u)" > .env
-          sudo docker compose build --no-cache --pull
-          sudo docker compose up airflow-init
-          sudo docker compose up -d
+          
+        # Deploy for install airflow    
+
+        #  cd /home/DE_Market/airflow
+        #  sudo systemctl start docker.service
+        #  echo -e "AIRFLOW_UID=$(id -u)" > .env
+        #  sudo docker compose build --no-cache --pull
+        #  sudo docker compose up airflow-init
+        #  sudo docker compose up -d
