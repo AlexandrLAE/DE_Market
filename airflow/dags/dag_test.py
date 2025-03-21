@@ -15,12 +15,12 @@ dag = DAG('dag_test_1', default_args=default_args, schedule_interval='0 1 * * *'
 
 task1 = BashOperator(
     task_id='task1',
-    bash_command='python3 ./scripts/task1.py',
+    bash_command='python3 /scripts/task1.py',
     dag=dag)
 
 task2 = BashOperator(
     task_id='task2',
-    bash_command='python3 ./scripts/task2.py',
+    bash_command='python3 /scripts/task2.py',
     dag=dag)
 
 task1 >> task2
