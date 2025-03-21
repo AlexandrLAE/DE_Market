@@ -1,6 +1,6 @@
 services:
   jupyter:
-    build: ./jupyter_dockerfile
+    build: ./
     ports:
       - "10000:8888"
       - "4040:4040"
