@@ -1,4 +1,4 @@
-echo 'apache-airflow[postgres,redis,celery]
+apache-airflow[postgres,redis,celery]
 psycopg2-binary
 requests
 pandas
@@ -7,4 +7,4 @@ apache-airflow-providers-amazon
 apache-airflow-providers-http
 apache-airflow-providers-docker
 apache-airflow-providers-slack
-apache-airflow-providers-postgres' > requirements.txt
+apache-airflow-providers-postgres

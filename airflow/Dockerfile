@@ -1,4 +1,4 @@
-echo 'FROM apache/airflow:2.10.5
+FROM apache/airflow:2.10.5
 
 USER root
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -7,4 +7,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 USER airflow
 RUN pip install --upgrade pip setuptools --disable-pip-version-check
 COPY requirements.txt /requirements.txt
-RUN pip install --no-cache-dir -r /requirements.txt' > Dockerfile
+RUN pip install --no-cache-dir -r /requirements.txt
