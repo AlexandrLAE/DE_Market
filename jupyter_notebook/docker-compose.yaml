@@ -1,9 +1,6 @@
 services:
   jupyter:
-    container_name: jupyter_notebook
-    build:
-      context: ./jupyter_dockerfile
-      dockerfile: Dockerfile
+    build: ./jupyter_dockerfile
     ports:
       - "10000:8888"
       - "4040:4040"
