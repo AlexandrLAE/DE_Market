@@ -8,9 +8,10 @@ services:
       - ./synthetic_data:/home/jovyan/source
       - ../data_lake:/home/jovyan/data_lake
       - ./jupyter_notebook:/home/jovyan
-    command: jupyter notebook --no-browser --NotebookApp.token='' --NotebookApp.password='' --ip='*' --allow-root
+    command: sudo jupyter notebook --no-browser --NotebookApp.token='' --NotebookApp.password='' --ip='*' --allow-root
     environment:
       - GRANT_SUDO=yes
+      - CHOWN_EXTRA_OPTS='-R'
     user: root
     restart: always
     networks:
