@@ -57,6 +57,7 @@ x-airflow-common:
     # Use simple http server on scheduler for health checks
     # See https://airflow.apache.org/docs/apache-airflow/stable/administration-and-deployment/logging-monitoring/check-health.html#scheduler-health-check-server
     # yamllint enable rule:line-length
+    IRFLOW_CORE_EXECUTOR: LocalExecuto
     AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
     #_AIRFLOW_DB_MIGRATE: 'true'
@@ -143,9 +144,9 @@ services:
     # yamllint enable rule:line-length
     environment:
       <<: *airflow-common-env
-    
-
+  
 volumes:
   postgres-db-volume:
+
 networks:
   market:
