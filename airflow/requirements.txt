@@ -1,5 +1,6 @@
-apache-airflow[postgres,redis,celery]==2.10.5
+apache-airflow[postgres,redis,celery]
 psycopg2-binary
+requests
 pandas
 numpy
 apache-airflow-providers-amazon
@@ -7,6 +8,3 @@ apache-airflow-providers-http
 apache-airflow-providers-docker
 apache-airflow-providers-slack
 apache-airflow-providers-postgres
-airflow-providers-clickhouse
-requests
-pyspark
