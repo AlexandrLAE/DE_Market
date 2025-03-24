@@ -7,6 +7,6 @@ apache-airflow-providers-http
 apache-airflow-providers-docker
 apache-airflow-providers-slack
 apache-airflow-providers-postgres
-airflow-providers-clickhouse==0.0.1
-requests==2.31.0
+airflow-providers-clickhouse
+requests
 pyspark
