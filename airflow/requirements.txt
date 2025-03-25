@@ -1,7 +1,7 @@
 apache-airflow[postgres,redis,celery]==2.10.5
 psycopg2-binary
 requests
-pandas=
+pandas
 numpy
 apache-airflow-providers-amazon
 apache-airflow-providers-http
