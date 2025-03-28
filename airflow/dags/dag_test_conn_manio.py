@@ -25,7 +25,7 @@ def test_minio_connection():
     # get to get the whole body.
     for obj in bucket.objects.all():
         key = obj.key
-    buckets = s3.list_buckets()  # Получаем список бакетов
+    buckets = s3.meta.list_buckets()  # Получаем список бакетов
     print(f"Доступные бакеты в MinIO: {buckets}")
 
 
