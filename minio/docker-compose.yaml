@@ -6,7 +6,7 @@ services:
     command: server /data --console-address ":9001"
     environment:
       MINIO_ROOT_USER: "labyntsev"  # Логин (замените на свой)
-      MINIO_ROOT_PASSWORD: "minio"  # Пароль (обязательно замените!)
+      MINIO_ROOT_PASSWORD: "Labyntsev_minio_213"  # Пароль (обязательно замените!)
     volumes:
       - ./minio_data:/data  # Локальная папка для хранения данных
     ports:
