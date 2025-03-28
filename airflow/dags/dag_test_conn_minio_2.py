@@ -21,7 +21,7 @@ dag = DAG('test_minio_2', default_args=default_args, schedule_interval='0 1 * * 
           max_active_tasks=2, max_active_runs=1, tags=["test_minio_connection"])
 
 task1 = PythonOperator (
-    task_id='test_minio',
+    task_id='test_minio_2',
         python_callable=test_minio_connection,
         dag=dag)
 
