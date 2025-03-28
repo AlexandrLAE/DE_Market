@@ -7,8 +7,10 @@ from datetime import datetime
 
 def test_minio_connection():
     hook = S3Hook(aws_conn_id='minio_conn')
-    buckets = hook.list_buckets()  # Получаем список бакетов
-    print(f"Доступные бакеты в MinIO: {buckets}")
+    s3 = hook.get_conn()
+    response = s3.list_buckets()
+    for bucket in response['Buckets']:
+        print(f"Bucket: {bucket['Name']}")
 
 default_args = {
     "owner": "market",
