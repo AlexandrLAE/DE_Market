@@ -20,7 +20,7 @@ dag = DAG('test_minio', default_args=default_args, schedule_interval='0 1 * * *'
 
 task1 = PythonOperator (
     task_id='test_minio',
-        python_callable=test_minio_connection
+        python_callable=test_minio_connection,
         dag=dag)
 
 task1 
