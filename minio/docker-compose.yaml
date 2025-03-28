@@ -10,7 +10,7 @@ services:
     volumes:
       - ./minio_data:/data  # Локальная папка для хранения данных
     ports:
-      - "9000:9000"  # S3 API
+      - "9010:9010"  # S3 API
       - "9001:9001"  # Web Console
     networks:
       - minio_network
