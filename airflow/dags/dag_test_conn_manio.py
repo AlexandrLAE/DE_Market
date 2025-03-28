@@ -25,13 +25,9 @@ def test_minio_connection():
     # get to get the whole body.
     for obj in bucket.objects.all():
         key = obj.key
-    buckets = s3client.list_buckets()  # Получаем список бакетов
+    buckets = s3.list_buckets()  # Получаем список бакетов
     print(f"Доступные бакеты в MinIO: {buckets}")
 
-# def test_minio_connection():
-#     hook = S3Hook(aws_conn_id='minio_conn')
-#     buckets = hook.list_buckets()  # Получаем список бакетов
-#     print(f"Доступные бакеты в MinIO: {buckets}")
 
 default_args = {
     "owner": "market",
