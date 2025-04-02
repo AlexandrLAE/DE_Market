@@ -3,6 +3,7 @@ FROM apache/airflow:2.10.5-python3.10
 USER root
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+    openjdk-17-jre-headless \
     libpq-dev \
     gcc \
     git \
