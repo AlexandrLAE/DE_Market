@@ -103,8 +103,8 @@ services:
       start_period: 5s
     restart: always
     networks:
-      - backend
-      
+    #  - backend
+      - frontend  
   
   airflow-webserver:
     <<: *airflow-common
@@ -123,7 +123,7 @@ services:
       airflow-init:
         condition: service_completed_successfully
     networks:
-      - backend
+      #- backend
       - frontend
   airflow-scheduler:
     <<: *airflow-common
@@ -140,7 +140,7 @@ services:
       airflow-init:
         condition: service_completed_successfully
     networks:
-      - backend
+    #  - backend
       - frontend
   airflow-init:
     <<: *airflow-common
@@ -150,15 +150,15 @@ services:
     environment:
       <<: *airflow-common-env
     networks:
-      - backend
+    #  - backend
       - frontend 
 volumes:
   postgres-db-volume:
 
 networks:
-  backend:
-    external: true
-    name: de_backend
+  # backend:
+  #   external: true
+  #   name: de_backend
   frontend:
     external: true
     name: de_frontend
