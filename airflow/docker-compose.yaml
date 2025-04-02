@@ -83,9 +83,7 @@ x-airflow-common:
     &airflow-common-depends-on
     postgres:
       condition: service_healthy
-  networks:
-    - backend
-    - frontend
+  
 
 services:
   postgres:
@@ -106,7 +104,7 @@ services:
     restart: always
     networks:
       - backend
-      - frontend
+      
   
   airflow-webserver:
     <<: *airflow-common
@@ -124,7 +122,9 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
-
+    networks:
+      - backend
+      - frontend
   airflow-scheduler:
     <<: *airflow-common
     command: scheduler
@@ -139,7 +139,9 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
-
+    networks:
+      - backend
+      - frontend
   airflow-init:
     <<: *airflow-common
     build: ./
@@ -147,7 +149,9 @@ services:
     # yamllint enable rule:line-length
     environment:
       <<: *airflow-common-env
-  
+    networks:
+      - backend
+      - frontend 
 volumes:
   postgres-db-volume:
 
