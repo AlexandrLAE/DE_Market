@@ -15,8 +15,7 @@ def test_minio_connection():
                         aws_secret_access_key=conn.password
     )
     s3client = s3.meta.client 
-    hook = s3.get_conn()
-
+    
     #and then you can use boto3 methods for manipulating buckets and files
     #for example:
 
@@ -26,7 +25,7 @@ def test_minio_connection():
     # get to get the whole body.
     for obj in bucket.objects.all():
         key = obj.key
-    buckets = hook.list_buckets()  # Получаем список бакетов
+    buckets = s3client.list_buckets()  # Получаем список бакетов
     print(f"Доступные бакеты в MinIO: {buckets}")
 
 

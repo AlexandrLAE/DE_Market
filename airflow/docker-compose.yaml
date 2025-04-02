@@ -50,7 +50,7 @@ x-airflow-common:
   # Comment the image line, place your Dockerfile in the directory where you placed the docker-compose.yaml
   # and uncomment the "build" line below, Then run `docker-compose build` to build the images.
   # image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.10.5}
-  build: ./
+  build: ./airflow
   environment:
     &airflow-common-env
     # yamllint disable rule:line-length
@@ -77,13 +77,15 @@ x-airflow-common:
     - ./config:/opt/airflow/config
     - ./plugins:/opt/airflow/plugins
     - ./scripts:/opt/airflow/scripts
+    - ./gx:/opt/airflow/great_expectations
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
     postgres:
       condition: service_healthy
   networks:
-    - market    
+    - backend
+    - frontend
 
 services:
   postgres:
@@ -103,7 +105,8 @@ services:
       start_period: 5s
     restart: always
     networks:
-    - market
+      - backend
+      - frontend
   
   airflow-webserver:
     <<: *airflow-common
@@ -149,4 +152,9 @@ volumes:
   postgres-db-volume:
 
 networks:
-  market:
+  backend:
+    external: true
+    name: de_backend
+  frontend:
+    external: true
+    name: de_frontend
