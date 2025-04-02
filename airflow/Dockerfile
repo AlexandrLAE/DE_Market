@@ -19,7 +19,7 @@ ENV PYSPARK_PYTHON=python3
 COPY --from=apache/spark:3.5.0 /opt/spark /opt/spark
 
 # Копируем скрипты инициализации GX
-COPY docker/entrypoint-gx.sh /entrypoint-gx.sh
+COPY ./entrypoint-gx.sh /entrypoint-gx.sh
 COPY scripts/init-gx.py /opt/airflow/scripts/init-gx.py
 RUN chmod +x /entrypoint-gx.sh
 
