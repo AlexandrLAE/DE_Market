@@ -13,6 +13,7 @@ services:
       - ./logs:/var/log/nginx
       - ./sites-available:/etc/nginx/sites-available 
       - ./sites-enabled:/etc/nginx/sites-enabled 
+      - ./html:/var/www/html/
       
     networks:
       - frontend
