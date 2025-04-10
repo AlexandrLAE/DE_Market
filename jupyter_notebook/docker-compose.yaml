@@ -1,6 +1,7 @@
 services:
   jupyter:
-    build: ./
+    images: quay.io/jupyter/datascience-notebook
+    
     ports:
       - "10000:8888"
       - "4040:4040"
@@ -12,9 +13,13 @@ services:
     environment:
       - GRANT_SUDO=yes
       - CHOWN_EXTRA_OPTS='-R'
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
     user: root
     restart: always
     networks:
     - market
 networks:
   market: 
+  external: true
+  name: de_frontend
