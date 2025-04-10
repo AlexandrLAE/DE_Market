@@ -3,6 +3,8 @@ services:
     image: apache/spark:3.5.0
     container_name: spark-master
     hostname: spark-master
+    env_file:
+      - ../.env  # Путь к .env файлу на уровень выше
     command: >
       /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
       -h spark-master
@@ -25,6 +27,7 @@ services:
       - ./logs:/opt/spark/logs
     networks:
       - spark-network
+      - spark
     healthcheck:
       test: ["CMD", "curl", "-f", "http://spark-master:8090"]
       interval: 30s
@@ -35,6 +38,8 @@ services:
     image: apache/spark:3.5.0
     container_name: spark-worker-1
     hostname: spark-worker-1
+    env_file:
+      - ../.env  # Путь к .env файлу на уровень выше
     command: >
       bash -c "sleep 10 && /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker
       spark://spark-master:7077
@@ -64,3 +69,6 @@ services:
 networks:
   spark-network:
     driver: bridge
+  spark:
+    external: true
+    name: de_frontend
