@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добро пожаловать!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .apps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .app-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            transition: transform 0.2s;
+        }
+        .app-card:hover {
+            transform: translateY(-5px);
+        }
+        a {
+            text-decoration: none;
+            color: #0066cc;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Добро пожаловать на сервер!</h1>
+    <p>Доступные приложения:</p>
+
+    <div class="apps">
+        <div class="app-card">
+            <a href="http://airflow.de-project.space" target="_blank">
+                <img src="images/airflow.png" 
+                    alt="Airflow Logo" 
+                    style="width: 200px; border-radius: 8px;">
+            </a>
+        </div>
+        <div class="app-card">
+            
+            <a href="http://minio.de-project.space" target="_blank">
+                <img src="images/minio.png" 
+                alt="minio Logo" 
+                style="width: 200px; border-radius: 8px;">
+            </a>
+        </div>
+        
+    </div>
+</body>
+</html>
