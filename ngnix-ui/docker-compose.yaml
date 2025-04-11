@@ -5,7 +5,7 @@ services:
         container_name: nginx-ui
         restart: always
         environment:
-            - TZ=Russia/Moscow
+            - TZ=Europe/Moscow
         volumes:
             - ./nginx:/etc/nginx
             - ./nginx-ui:/etc/nginx-ui
