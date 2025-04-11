@@ -1,9 +1,6 @@
-
-version: '3.8'
-
 services:
   certbot:
-    build: .
+    build: ./
     container_name: de_certbot
     environment:
       - DOMAIN_EMAIL=${DOMAIN_EMAIL}
