@@ -1,17 +1,12 @@
-FROM ubuntu:22.04
+FROM certbot/certbot:latest
 
-EXPOSE 6000 80
-
-ARG DOMAIN_EMAIL
-ARG DOMAIN_URL
-ENV DOMAIN_EMAIL=$DOMAIN_EMAIL
-ENV DOMAIN_URL=$DOMAIN_URL
+# Можно кастомизировать при необходимости
+# ENV DOMAIN_EMAIL=${DOMAIN_EMAIL:-"admin@example.com"} \
+#     DOMAIN_URL=${DOMAIN_URL:-"example.com"}
 
 WORKDIR /certbot
-COPY . /certbot
-WORKDIR /certbot
+COPY generate-certificate.sh .
 
-RUN apt-get update
-RUN apt-get -y install certbot
+RUN chmod +x generate-certificate.sh
 
-CMD ["sh", "generate-certificate.sh"]
+CMD ["./generate-certificate.sh"]
