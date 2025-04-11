@@ -5,8 +5,8 @@ services:
     restart: unless-stopped
     command: server /data --address ':9000' --console-address ':9001'
     environment:
-      MINIO_SERVER_URL: "http://minio.de-project.space/"
-      MINIO_BROWSER_REDIRECT_URL: "http://minio.de-project.space/console/"
+      MINIO_SERVER_URL: "http://minio.de-project.space"
+      MINIO_BROWSER_REDIRECT_URL: "http://minio.example.net/minio/ui"
       MINIO_ROOT_USER: ${AWS_ACCESS_KEY_ID}  # Логин (замените на свой)
       MINIO_ROOT_PASSWORD: ${AWS_SECRET_ACCESS_KEY}  # Пароль (обязательно замените!)
     volumes:
