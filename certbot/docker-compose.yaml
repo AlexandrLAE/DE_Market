@@ -8,7 +8,7 @@ services:
     ports:
       - "6000:80"
     volumes:
-      ../nginx:/etc/nginx/
+      - ../nginx:/etc/nginx/
       - ./:/etc/letsencrypt/live/certfolder*/
       - ../nginx/certs/fullchain.pem:/etc/nginx/certs/fullchain.pem
       - ../nginx/certs/privkey.pem:/etc/nginx/certs/privkey.pem
