@@ -4,8 +4,7 @@ services:
         tty: true
         container_name: nginx-ui
         restart: always
-        environment:
-            - TZ=Europe/Moscow
+        
         volumes:
             - ./nginx:/etc/nginx
             - ./nginx-ui:/etc/nginx-ui
