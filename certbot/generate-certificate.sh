@@ -26,3 +26,5 @@ else
     echo "Failed to generate certificate!"
     exit 1
 fi
+
+# docker compose run --rm certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d de-project.space
