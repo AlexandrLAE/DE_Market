@@ -2,8 +2,8 @@ services:
   certbot:
     image: certbot/certbot:latest
     volumes:
-      - ./certbot/www/:/var/www/certbot/:rw
-      - ./certbot/conf/:/etc/letsencrypt/:rw
+      - ./www/:/var/www/certbot/:rw
+      - ./conf/:/etc/letsencrypt/:rw
 
 networks:
   frontend:
