@@ -11,6 +11,7 @@ services:
       - ./certs/fullchain.pem:/etc/nginx/certs/fullchain.pem
       - ./certs/privkey.pem:/etc/nginx/certs/privkey.pem
       - ./html:/var/www/html
+      - ../certbot/www/:/var/www/certbot/
       
     networks:
       - frontend

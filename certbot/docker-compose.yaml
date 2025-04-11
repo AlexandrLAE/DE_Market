@@ -1,26 +1,9 @@
 services:
   certbot:
-    build: ./
-    container_name: de_certbot
-    environment:
-      - DOMAIN_EMAIL=${DOMAIN_EMAIL}
-      - DOMAIN_URL=${DOMAIN_URL}
+    image: certbot/certbot:latest
     volumes:
-      - ../nginx:/etc/nginx/
-      - ./:/etc/letsencrypt/live/certfolder/
-      - ../nginx/certs/fullchain.pem:/etc/nginx/certs/fullchain.pem
-      - ../nginx/certs/privkey.pem:/etc/nginx/certs/privkey.pem
-      
-      - ./www:/var/www/certbot
-    ports:
-      - "6000:80"
-     
-    networks:
-      - frontend
-    restart: unless-stopped
-
-volumes:
-  certbot-data:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
 
 networks:
   frontend:
