@@ -9,4 +9,4 @@ COPY generate-certificate.sh .
 
 RUN chmod +x generate-certificate.sh
 
-CMD ["./generate-certificate.sh"]
+CMD ["sh", "generate-certificate.sh"]
