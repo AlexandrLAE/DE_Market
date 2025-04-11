@@ -1,0 +1,25 @@
+
+services:
+  certbot:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: de_certbot
+    ports:
+      - "6000:80"
+    volumes:
+      ../nginx:/etc/nginx/
+      - ./:/etc/letsencrypt/live/certfolder*/
+      - ../nginx/certs/fullchain.pem:/etc/nginx/certs/fullchain.pem
+      - ../nginx/certs/privkey.pem:/etc/nginx/certs/privkey.pem
+    args:
+        DOMAIN_EMAIL: ${DOMAIN_EMAIL}
+        DOMAIN_URL: ${DOMAIN_URL}
+    networks:
+      - frontend
+    restart: unless-stopped
+
+networks:
+  frontend:
+    external: true
+    name: de_frontend
