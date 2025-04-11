@@ -11,9 +11,9 @@ services:
       MINIO_ROOT_PASSWORD: ${AWS_SECRET_ACCESS_KEY}  # Пароль (обязательно замените!)
     volumes:
       - ./minio_data:/data  # Локальная папка для хранения данных
-    ports:
-      - "9010:9000"  # S3 API
-      - "9001:9001"  # Web Console
+    # ports:
+    #   - "9010:9000"  # S3 API
+    #   - "9001:9001"  # Web Console
     logging:
       driver: "json-file"
       options:
