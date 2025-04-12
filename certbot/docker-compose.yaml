@@ -7,11 +7,11 @@ services:
       - ./conf:/etc/letsencrypt:rw
       - ../nginx/certs:/etc/nginx/certs:rw
    
-    entrypoint: |
-      sh -c 'certbot certonly --webroot --webroot-path /var/www/html \
-      --email jeaf@ya.ru -d de-project.space,www.de-project.space,airflow.de-project.space, minio.de-project.space,spark.de-project.space,ngnix-ui.de-project.space,jupyter.de-project.space\
-      --agree-tos --non-interactive --keep-until-expiring \
-      --cert-name de-project.space'
+    # entrypoint: |
+    #   sh -c 'certbot certonly --webroot --webroot-path /var/www/html --dry-run\
+    #   --email jeaf@ya.ru -d de-project.space,www.de-project.space,airflow.de-project.space, minio.de-project.space,spark.de-project.space,ngnix-ui.de-project.space,jupyter.de-project.space\
+    #   --agree-tos --non-interactive --keep-until-expiring \
+    #   --cert-name de-project.space'
     networks:
       - frontend
     restart: no
@@ -20,3 +20,6 @@ networks:
   frontend:
     external: true
     name: de_frontend
+
+# docker compose run --rm certbot certonly --webroot --webroot-path /var/www/html --dry-run --email jeaf@ya.ru -d de-project.space,www.de-project.space,airflow.de-project.space, minio.de-project.space,spark.de-project.space,ngnix-ui.de-project.space,jupyter.de-project.space --agree-tos --non-interactive --keep-until-expiring --cert-name de-project.space
+# docker compose run --rm certbot certonly --webroot --webroot-path /var/www/html --dry-run --email jeaf@ya.ru -d de-project.space --cert-name de-project.space
