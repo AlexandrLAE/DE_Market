@@ -8,7 +8,7 @@ services:
       - ../nginx/certs:/etc/nginx/certs
    
     entrypoint: |
-      sh -c 'certbot certonly --webroot --webroot-path /var/www/html --dry-run \
+      sh -c 'certbot certonly --webroot --webroot-path /var/www/html \
       --email jeaf@ya.ru -d de-project.space,www.de-project.space,airflow.de-project.space,minio.de-project.space \
       --agree-tos --non-interactive --keep-until-expiring \
       --cert-name de-project.space'
