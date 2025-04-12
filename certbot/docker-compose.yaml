@@ -6,14 +6,12 @@ services:
       - ./www:/var/www/html:ro
       - ./conf:/etc/letsencrypt:rw
       - ../nginx/certs:/etc/nginx/certs:rw
-    environment:
-      - DOMAIN_EMAIL=jeaf@ya.ru
-      - DOMAIN_URL=de-project.space
+   
     entrypoint: |
       sh -c 'certbot certonly --webroot --webroot-path /var/www/html \
-      --email $${DOMAIN_EMAIL} -d $${DOMAIN_URL},www.$${DOMAIN_URL},airflow.$${DOMAIN_URL}, inio.$${DOMAIN_URL},spark.$${DOMAIN_URL},ngnix-ui.$${DOMAIN_URL},jupyter.$${DOMAIN_URL}\
+      --email jeaf@ya.ru -d de-project.space,www.de-project.space,airflow.de-project.space, minio.de-project.space,spark.de-project.space,ngnix-ui.de-project.space,jupyter.de-project.space\
       --agree-tos --non-interactive --keep-until-expiring \
-      --cert-name $${DOMAIN_URL}'
+      --cert-name de-project.space'
     networks:
       - frontend
     restart: no
