@@ -2,9 +2,9 @@ services:
   certbot:
     image: certbot/certbot:latest
     volumes:
-      - ./www/:/var/www/certbot/:rw
+      - ./www/:/var/www/html/:rw
       - ./conf/:/etc/letsencrypt/:rw
-
+      - ../nginx/certs:/etc/letsencrypt/live/de-project.space
 networks:
   frontend:
     external: true
