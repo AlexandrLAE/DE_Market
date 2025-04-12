@@ -7,10 +7,15 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./:/etc/nginx/
+      
+      - ./conf.d:/etc/nginx/conf.d
+      - ../certbot/www:/var/www/certbot
+      - ../certbot/conf/live/de-project.space:/etc/nginx/certs
       - ./html:/var/www/html
-      - ../certbot/www/:/var/www/html
-      - ../certbot/conf/live/de-project.space:/etc/ngnix/certs
+      
+      
+      
+      
     networks:
       - frontend
     restart: unless-stopped
