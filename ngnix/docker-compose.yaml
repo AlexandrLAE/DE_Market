@@ -10,7 +10,7 @@ services:
       - ./:/etc/nginx/
       - ./certs:/etc/nginx/certs
       - ./html:/var/www/html
-      - ../certbot/www/:/var/www/html
+    #  - ../certbot/www/:/var/www/html
       
     networks:
       - frontend
