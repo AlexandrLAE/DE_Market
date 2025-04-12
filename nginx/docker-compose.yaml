@@ -10,7 +10,8 @@ services:
       
       - ./conf.d:/etc/nginx/conf.d
       - ../certbot/www:/var/www/certbot
-      - ../certbot/conf/live/de-project.space:/etc/nginx/certs
+      # - ../certbot/conf/live/de-project.space:/etc/nginx/certs
+      - ./certs:/etc/nginx/certs
       - ./html:/var/www/html
       
       
