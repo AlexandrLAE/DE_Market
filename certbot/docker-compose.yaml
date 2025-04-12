@@ -3,9 +3,9 @@ services:
     image: certbot/certbot:latest
     container_name: de_certbot
     volumes:
-      - ./www:/var/www/html:ro
-      - ./conf:/etc/letsencrypt:rw
-      - ../nginx/certs:/etc/nginx/certs:rw
+      - ./www:/var/www/html
+      - ./conf:/etc/letsencrypt
+      - ../nginx/certs:/etc/nginx/certs
    
     # entrypoint: |
     #   sh -c 'certbot certonly --webroot --webroot-path /var/www/html --dry-run\
