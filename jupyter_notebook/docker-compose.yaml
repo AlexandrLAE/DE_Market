@@ -18,8 +18,8 @@ services:
     user: root
     restart: always
     networks:
-    - market
+      - market
 networks:
   market: 
-  external: true
-  name: de_frontend
+    external: true
+    name: de_frontend
