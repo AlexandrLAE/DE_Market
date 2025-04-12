@@ -7,8 +7,8 @@ services:
       - ./conf:/etc/letsencrypt:rw
       - ../nginx/certs:/etc/nginx/certs:rw
     environment:
-      - DOMAIN_EMAIL=${DOMAIN_EMAIL}
-      - DOMAIN_URL=${DOMAIN_URL}
+      - DOMAIN_EMAIL=jeaf@ya.ru
+      - DOMAIN_URL=de-project.space
     entrypoint: |
       sh -c 'certbot certonly --webroot --webroot-path /var/www/html \
       --email $${DOMAIN_EMAIL} -d $${DOMAIN_URL},www.$${DOMAIN_URL},airflow.$${DOMAIN_URL}, inio.$${DOMAIN_URL},spark.$${DOMAIN_URL},ngnix-ui.$${DOMAIN_URL},jupyter.$${DOMAIN_URL}\
