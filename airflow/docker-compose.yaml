@@ -6,7 +6,7 @@ x-airflow-common:
   environment:
     &airflow-common-env
     AIRFLOW_CORE_EXECUTOR: LocalExecutor
-    AIRFLOW__WEBSERVER__BASE_URL: http://airflow.de-project.space
+    AIRFLOW__WEBSERVER__BASE_URL: https://airflow.de-project.space
     AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: 'true'
     AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
