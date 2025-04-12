@@ -8,9 +8,8 @@ services:
       - "443:443"
     volumes:
       - ./:/etc/nginx/
-      - ./certs:/etc/nginx/certs
       - ./html:/var/www/html
-    #  - ../certbot/www/:/var/www/html
+      - ../certbot/www/:/var/www/html
       
     networks:
       - frontend
