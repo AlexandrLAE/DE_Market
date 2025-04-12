@@ -1,7 +1,8 @@
+version: '3.8'
+
 services:
   jupyter:
-    images: quay.io/jupyter/datascience-notebook
-    
+    image: quay.io/jupyter/datascience-notebook
     ports:
       - "10000:8888"
       - "4040:4040"
@@ -9,17 +10,24 @@ services:
       - ./synthetic_data:/home/jovyan/source
       - ../data_lake:/home/jovyan/data_lake
       - ./jupyter_notebook:/home/jovyan
-    command: sudo jupyter notebook --no-browser --NotebookApp.token='' --NotebookApp.password='' --ip='*' --allow-root
+    command: >
+      sudo jupyter notebook
+      --no-browser
+      --NotebookApp.token=''
+      --NotebookApp.password=''
+      --ip='*'
+      --allow-root
     environment:
       - GRANT_SUDO=yes
-      - CHOWN_EXTRA_OPTS='-R'
+      - CHOWN_EXTRA_OPTS=-R
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
     user: root
     restart: always
     networks:
       - market
+
 networks:
-  market: 
+  market:
     external: true
     name: de_frontend
