@@ -10,7 +10,7 @@ services:
       - ./:/etc/nginx/
       - ./html:/var/www/html
       - ../certbot/www/:/var/www/html
-      
+      - ../certbot/conf/live/de-project.space:/etc/ngnix/certs
     networks:
       - frontend
     restart: unless-stopped
