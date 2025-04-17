@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   jupyter:
-    image: quay.io/jupyter/datascience-notebook
+    build: ./
     container_name: de_jupyter
     ports:
       - "10000:8888"
