@@ -1,0 +1,69 @@
+from airflow.sensors.base import BaseSensorOperator
+from airflow.exceptions import AirflowException
+from airflow.providers.amazon.aws.hooks.s3 import S3Hook
+from typing import Any, Dict, Optional
+from airflow.utils.context import Context
+
+class S3ConnectionSensor(BaseSensorOperator):
+    """
+    Сенсор для проверки соединения с S3.
+
+    :param aws_conn_id: ID соединения AWS в Airflow
+    :param bucket_name: Имя бакета для проверки (опционально)
+    :param max_retries: Максимальное количество попыток проверки
+    :param retry_delay: Задержка между попытками в секундах
+    """
+
+    template_fields = ("aws_conn_id", "bucket_name")
+
+    def __init__(
+        self,
+        *,
+        aws_conn_id: str = "aws_default",
+        bucket_name: Optional[str] = None,
+        max_retries: int = 3,
+        retry_delay: int = 5,
+        **kwargs,
+    ):
+        super().__init__(**kwargs)
+        self.aws_conn_id = aws_conn_id
+        self.bucket_name = bucket_name
+        self.max_retries = max_retries
+        self.retry_delay = retry_delay
+        self.hook = None
+
+    def poke(self, context: Context) -> bool:
+        """Основной метод проверки соединения"""
+        try:
+            # Инициализация хука S3
+            self.hook = S3Hook(aws_conn_id=self.aws_conn_id)
+            
+            # Если указано имя бакета, проверяем доступ к нему
+            if self.bucket_name:
+                self.log.info("Проверка доступа к бакету: %s", self.bucket_name)
+                if not self.hook.check_for_bucket(self.bucket_name):
+                    raise AirflowException(f"Бакет {self.bucket_name} не найден или нет доступа")
+                self.log.info("Успешное соединение с бакетом %s", self.bucket_name)
+            else:
+                # Простая проверка соединения без указания бакета
+                self.log.info("Проверка соединения с S3")
+                self.hook.get_conn()
+                self.log.info("Успешное соединение с S3")
+
+            return True
+
+        except Exception as e:
+            self.log.error("Ошибка соединения с S3: %s", str(e))
+            if self.max_retries > 0:
+                self.max_retries -= 1
+                self.log.info("Повторная попытка через %s секунд...", self.retry_delay)
+                time.sleep(self.retry_delay)
+                return False
+            raise AirflowException(f"Не удалось установить соединение с S3 после нескольких попыток: {str(e)}")
+
+    def execute(self, context: Context) -> Any:
+        """Переопределяем execute для логирования начала/конца проверки"""
+        self.log.info("Начало проверки соединения с S3")
+        result = super().execute(context)
+        self.log.info("Проверка соединения завершена")
+        return result
