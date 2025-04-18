@@ -30,11 +30,16 @@ def pipline_ETL_ozon_transaction_list():
     def test_minio_connection():
         """Проверка подключения к MinIO"""
         try:
-            s3_hook = S3Hook(aws_conn_id='minio_conn')
-            client = s3_hook.get_conn()
-            buckets = client.list_buckets()
-            bucket_names = [bucket['Name'] for bucket in buckets['Buckets']]
-            print(f"Успешное подключение. Доступные бакеты: {bucket_names}")
+            hook = S3Hook(aws_conn_id='minio_conn')
+            s3 = hook.get_conn()
+            response = s3.list_buckets()
+            for bucket in response['Buckets']:
+                print(f"Bucket: {bucket['Name']}")
+            # s3_hook = S3Hook(aws_conn_id='minio_conn')
+            # client = s3_hook.get_conn()
+            # buckets = client.list_buckets()
+            # bucket_names = [bucket['Name'] for bucket in buckets['Buckets']]
+            # print(f"Успешное подключение. Доступные бакеты: {bucket_names}")
             return True
         except Exception as e:
             print(f"Ошибка подключения к MinIO: {e}")
