@@ -53,7 +53,7 @@ services:
       - SPARK_PUBLIC_DNS=spark-worker-1
       - SPARK_WORKER_CORES=2
       - SPARK_WORKER_MEMORY=2G
-      - SPARK_HADOOP_S3A_ENDPOINT=http://minio:9010
+      - SPARK_HADOOP_S3A_ENDPOINT=http://de_minio:9000
       - SPARK_HADOOP_S3A_ACCESS_KEY=${AWS_ACCESS_KEY_ID}
       - SPARK_HADOOP_S3A_SECRET_KEY=${AWS_SECRET_ACCESS_KEY}
     volumes:
