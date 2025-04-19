@@ -22,9 +22,11 @@ dag = DAG('dag_test_sensor',
 
 test_sensor = S3ConnectionSensor(
     task_id="check_s3_connection",
-    aws_conn_id="my_aws_conn",
+    aws_conn_id="minio_conn",
+    bucket_name="data.lake",
     poke_interval=30,  # Проверка каждые 30 секунд
     timeout=300, 
+    dag=dag
     )
   
 test_sensor
