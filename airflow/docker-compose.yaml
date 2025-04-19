@@ -90,15 +90,15 @@ services:
     networks:
       - frontend
       
-  airflow-init:
-    <<: *airflow-common
-    build: ./
-    container_name: de_airflow_init
-    command: version
-    environment:
-      <<: *airflow-common-env
-    networks:
-      - frontend
+  # airflow-init:
+  #   <<: *airflow-common
+  #   build: ./
+  #   container_name: de_airflow_init
+  #   command: version
+  #   environment:
+  #     <<: *airflow-common-env
+  #   networks:
+  #     - frontend
        
 volumes:
   postgres-db-volume:
