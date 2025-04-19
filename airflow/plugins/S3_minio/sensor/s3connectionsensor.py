@@ -1,8 +1,10 @@
 from airflow.sensors.base import BaseSensorOperator
 from airflow.exceptions import AirflowException
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 from airflow.utils.context import Context
+from airflow.models.baseoperator import BaseOperator
+import time
 
 class S3ConnectionSensor(BaseSensorOperator):
     """
@@ -22,7 +24,7 @@ class S3ConnectionSensor(BaseSensorOperator):
         aws_conn_id: str = "aws_default",
         bucket_name: Optional[str] = None,
         max_retries: int = 3,
-        retry_delay: int = 5,
+        retry_delay: int = 60,
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -42,7 +44,8 @@ class S3ConnectionSensor(BaseSensorOperator):
             if self.bucket_name:
                 self.log.info("Проверка доступа к бакету: %s", self.bucket_name)
                 if not self.hook.check_for_bucket(self.bucket_name):
-                    raise AirflowException(f"Бакет {self.bucket_name} не найден или нет доступа")
+                    self.log.warning("Бакет %s не найден или нет доступа", self.bucket_name)
+                    return False
                 self.log.info("Успешное соединение с бакетом %s", self.bucket_name)
             else:
                 # Простая проверка соединения без указания бакета
@@ -64,6 +67,10 @@ class S3ConnectionSensor(BaseSensorOperator):
     def execute(self, context: Context) -> Any:
         """Переопределяем execute для логирования начала/конца проверки"""
         self.log.info("Начало проверки соединения с S3")
-        result = super().execute(context)
-        self.log.info("Проверка соединения завершена")
-        return result
+        try:
+            result = super().execute(context)
+            self.log.info("Проверка соединения завершена успешно")
+            return result
+        except Exception as e:
+            self.log.error("Проверка соединения завершена с ошибкой: %s", str(e))
+            raise
