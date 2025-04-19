@@ -37,6 +37,7 @@ class S3ConnectionSensor(BaseSensorOperator):
     def poke(self, context: Context) -> bool:
         """Основной метод проверки соединения"""
         try:
+            self.log.info("Начало проверки соединения с S3")
             # Инициализация хука S3
             self.hook = S3Hook(aws_conn_id=self.aws_conn_id)
             
@@ -64,13 +65,3 @@ class S3ConnectionSensor(BaseSensorOperator):
                 return False
             raise AirflowException(f"Не удалось установить соединение с S3 после нескольких попыток: {str(e)}")
 
-    def execute(self, context: Context) -> Any:
-        """Переопределяем execute для логирования начала/конца проверки"""
-        self.log.info("Начало проверки соединения с S3")
-        try:
-            result = super().execute(context)
-            self.log.info("Проверка соединения завершена успешно")
-            return result
-        except Exception as e:
-            self.log.error("Проверка соединения завершена с ошибкой: %s", str(e))
-            raise
