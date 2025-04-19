@@ -1,7 +1,7 @@
 from datetime import datetime
 from airflow.models import DAG
 from airflow.operators.bash import BashOperator
-from S3_minio.sensor import S3ConnectionSensor
+from S3_minio.sensor.s3connectionsensor import S3ConnectionSensor
 
 
 default_args = {
