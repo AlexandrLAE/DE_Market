@@ -1,5 +1,5 @@
 from airflow import DAG
-from airflow.providers.http.operators.http import HttpOperator
+from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.models import Variable
 import json
 from datetime import datetime
@@ -18,7 +18,7 @@ dag = DAG('test_http', default_args=default_args, schedule_interval='0 1 * * *',
 v_client_id = Variable.get("client_id_ozon_password")
 v_api = Variable.get("api_ozon_password")
 
-task_post = HttpOperator(
+task_post = SimpleHttpOperator(
     task_id="post_data",
     method="POST",
     endpoint="",
@@ -41,6 +41,7 @@ task_post = HttpOperator(
             "Content-Type": "application/json"
             },
     http_conn_id="API_OZON_transaction_list",
+    dag=dag
 )
 
 task_post 
