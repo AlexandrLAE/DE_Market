@@ -41,7 +41,10 @@ task_post = SimpleHttpOperator(
             "Content-Type": "application/json"
             },
     http_conn_id="API_OZON_transaction_list",
-    response_check=lambda response: response.json()['status'] == 'OK',
+    response_check=lambda response: (
+    response.status_code in [200, 201] and 
+    response.json().get('status') == 'OK'
+),
     dag=dag
 )
 
