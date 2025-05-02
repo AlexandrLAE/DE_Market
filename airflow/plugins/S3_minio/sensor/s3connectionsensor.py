@@ -1,9 +1,7 @@
 from airflow.sensors.base import BaseSensorOperator
-from airflow.exceptions import AirflowException
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 from typing import Any, Optional
 from airflow.utils.context import Context
-from airflow.models.baseoperator import BaseOperator
 import time
 
 class S3ConnectionSensor(BaseSensorOperator):
@@ -48,11 +46,13 @@ class S3ConnectionSensor(BaseSensorOperator):
                     self.log.warning("Бакет %s не найден или нет доступа", self.bucket_name)
                     return False
                 self.log.info("Успешное соединение с бакетом %s", self.bucket_name)
+                
             else:
                 # Простая проверка соединения без указания бакета
                 self.log.info("Проверка соединения с S3")
                 self.hook.get_conn()
                 self.log.info("Успешное соединение с S3")
+
 
             return True
 
@@ -62,6 +62,5 @@ class S3ConnectionSensor(BaseSensorOperator):
                 self.max_retries -= 1
                 self.log.info("Повторная попытка через %s секунд...", self.retry_delay)
                 time.sleep(self.retry_delay)
-                return False
-            raise AirflowException(f"Не удалось установить соединение с S3 после нескольких попыток: {str(e)}")
+            return False
 
