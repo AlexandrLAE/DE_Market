@@ -21,7 +21,7 @@ v_api = Variable.get("api_ozon_password")
 task_post = SimpleHttpOperator(
     task_id="post_data",
     method="POST",
-    endpoint="",
+    endpoint="/v3/finance/transaction/list",
     data=json.dumps({
             "filter": {
             "date": {
@@ -42,9 +42,10 @@ task_post = SimpleHttpOperator(
             },
     http_conn_id="API_OZON_transaction_list",
     response_check=lambda response: (
-    response.status_code in [200, 201] and 
-    response.json().get('status') == 'OK'
-),
+        response.status_code == 200 and 
+        isinstance(response.json().get('result'), list)
+    ),
+    log_response=True,
     dag=dag
 )
 
