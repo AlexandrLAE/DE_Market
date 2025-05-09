@@ -1,11 +1,11 @@
 from typing import Optional, Dict, Any
-from airflow.providers.http.operators.http import HttpOperator
+from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 from airflow.models import BaseOperator
 import json
 import time
 
-class PaginatedHttpToS3Operator(HttpOperator):
+class PaginatedHttpToS3Operator(SimpleHttpOperator):
     """
     Кастомный оператор для загрузки данных через POST с пагинацией и сохранения в S3    
     :param s3_conn_id: S3 connection ID
@@ -20,7 +20,7 @@ class PaginatedHttpToS3Operator(HttpOperator):
     :param request_params: Parameters for the POST request body
     """
     
-    template_fields = HttpOperator.template_fields + ('s3_bucket', 's3_key', 'start_page', 'page_size', 'end_pages')
+    template_fields = SimpleHttpOperator.template_fields + ('s3_bucket', 's3_key', 'start_page', 'page_size', 'end_pages')
     
     def __init__(
         self,
