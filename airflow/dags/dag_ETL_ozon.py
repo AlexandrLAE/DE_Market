@@ -8,7 +8,6 @@ from S3_minio.sensor.s3connectionsensor import S3ConnectionSensor
 with  DAG('dag_ETL_ozon', 
         owner="market",
         start_date=datetime(2025, 5, 1),
-        default_args=default_args, 
         schedule_interval='0 0 * * *', 
         #catchup=True,
         max_active_tasks=2, 
