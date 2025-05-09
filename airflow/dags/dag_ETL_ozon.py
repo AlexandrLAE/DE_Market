@@ -6,7 +6,7 @@ from S3_minio.operator.paginatedhttptos3operator import PaginatedHttpToS3Operato
 from S3_minio.sensor.s3connectionsensor import S3ConnectionSensor
 
 with  DAG('dag_ETL_ozon', 
-        owner="market",
+        #owner="market",
         start_date=datetime(2025, 5, 1),
         schedule_interval='0 0 * * *', 
         #catchup=True,
