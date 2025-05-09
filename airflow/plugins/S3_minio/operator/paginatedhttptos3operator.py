@@ -65,7 +65,7 @@ class PaginatedHttpToS3Operator(SimpleHttpOperator):
             return False
     
     def execute(self, context: Dict):
-        http_hook = self.get_hook()
+        http_hook = self.hook
         s3_hook = S3Hook(aws_conn_id=self.s3_conn_id)
         has_more = True
         page = self.start_page
