@@ -42,9 +42,10 @@ task_post = SimpleHttpOperator(
             },
     http_conn_id="API_OZON_transaction_list",
     response_check=lambda response: (
-        response.status_code == 200 and 
-        isinstance(response.json().get('result'), list)
-    ),
+    response.status_code == 200 and
+    bool(response.text.strip()) and
+    (lambda x: isinstance(x, (dict, list)) and (not isinstance(x, dict) or bool(x)))
+    (response.json()) if response.text.strip() else False),
     log_response=True,
     dag=dag
 )

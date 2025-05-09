@@ -20,7 +20,7 @@ class PaginatedHttpToS3Operator(HttpOperator):
     :param request_params: Parameters for the POST request body
     """
     
-    # template_fields = ('data', 'headers', 's3_bucket', 's3_key', 'start_date', 'end_date')
+    template_fields = HttpOperator.template_fields + ('s3_bucket', 's3_key', 'start_page', 'page_size', 'end_pages')
     
     def __init__(
         self,
@@ -50,18 +50,26 @@ class PaginatedHttpToS3Operator(HttpOperator):
         
     def default_pagination_callback(self, response: Any) -> bool:
         """Определяет по умолчанию есть ли следующая страница"""
-        pass
-        # try:
-        #     data = json.loads(response.text)
-        #     return bool(data.get('has_more', False))
-        # except (json.JSONDecodeError, AttributeError):
-        #     return False
+        if response.status_code != 200:
+            return False
+        if not response.text.strip():
+            return False
+        try:
+            data = response.json()
+            if isinstance(data, list):
+                return bool(data)  # Непустой ли список
+            if isinstance(data, dict):
+                return bool(data)  # Непустой ли словарь
+            return False
+        except (json.JSONDecodeError, AttributeError):
+            return False
     
     def execute(self, context: Dict):
         http_hook = self.get_hook()
         s3_hook = S3Hook(aws_conn_id=self.s3_conn_id)
-        
-        page = self.start_page        
+        has_more = True
+        page = self.start_page
+
         original_data = json.loads(self.data) if isinstance(self.data, str) else (self.data or {})
         
         while has_more and page <= self.end_pages:
@@ -109,3 +117,36 @@ class PaginatedHttpToS3Operator(HttpOperator):
             except Exception as e:
                 self.log.error(f"Error processing page {page}: {str(e)}")
                 raise
+
+#Example 
+#  upload_data = PaginatedHttpToS3Operator(
+#         task_id='upload_paginated_data',
+#         http_conn_id='API_OZON_transaction_list',
+#         endpoint='/v3/finance/transaction/list',
+#         method='POST',
+#         data=json.dumps({
+            # "filter": {
+            # "date": {
+            # "from": "2025-03-27T00:00:00.000Z",
+            # "to": "2025-03-28T00:00:00.000Z"
+            # },
+            # "operation_type": [ ],
+            # "posting_number": "",
+            # "transaction_type": "all"
+            # },
+         
+            # }),
+#         headers={
+            # "Client-Id": v_client_id,
+            # "Api-Key": v_api,
+            # "Content-Type": "application/json"
+            # },
+#         s3_conn_id='minio_conn',
+#         s3_bucket='data.lake',
+#         s3_key='ozon/finance/transaction/list/{ds}/page_{page}.json',
+#         page_size=10,
+#         end_pages=500,
+#         delay_between_pages=5,
+#         replace=False,
+#         dag=dag
+#     )
