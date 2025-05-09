@@ -26,7 +26,7 @@ v_api = Variable.get("api_ozon_password")
 
 check_s3 = S3ConnectionSensor(
         task_id='check_s3_data',
-        http_conn_id='minio_conn',
+        aws_conn_id='minio_conn',
         bucket_name='data.lake',
         dag=dag)
 
