@@ -5,13 +5,6 @@ from datetime import datetime
 from S3_minio.operator.paginatedhttptos3operator import PaginatedHttpToS3Operator
 from S3_minio.sensor.s3connectionsensor import S3ConnectionSensor
 
-def decide_branch(**kwargs):
-    # Логика ветвления на основе контекста выполнения
-    if kwargs['execution_date'].weekday() in [5, 6]:  # выходные
-        return 'weekend_task'
-    else:
-        return 'weekday_task'
-
 default_args = {
     "owner": "market",
     "depends_on_past": False,
