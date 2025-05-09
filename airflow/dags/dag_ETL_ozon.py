@@ -5,14 +5,9 @@ from datetime import datetime
 from S3_minio.operator.paginatedhttptos3operator import PaginatedHttpToS3Operator
 from S3_minio.sensor.s3connectionsensor import S3ConnectionSensor
 
-default_args = {
-    "owner": "market",
-    #"depends_on_past": False,
-    "start_date": datetime(2025, 5, 1),
-
-}
-
 with  DAG('dag_ETL_ozon', 
+        owner="market",
+        start_date=datetime(2025, 5, 1),
         default_args=default_args, 
         schedule_interval='0 0 * * *', 
         #catchup=True,
