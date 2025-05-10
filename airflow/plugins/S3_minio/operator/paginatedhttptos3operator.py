@@ -33,6 +33,7 @@ class PaginatedHttpToS3Operator(SimpleHttpOperator):
         end_pages: int = 1000,
         name_start_page: str='page',
         start_page: int = 1,
+        replace: bool = True,
         delay_between_pages: float = 5.0,
         pagination_callback: Optional[callable] = None,
         **kwargs
@@ -46,6 +47,7 @@ class PaginatedHttpToS3Operator(SimpleHttpOperator):
         self.end_pages = end_pages
         self.name_start_page = name_start_page
         self.start_page = start_page
+        self.replace = replace
         self.delay_between_pages = delay_between_pages
         self.pagination_callback = pagination_callback or self.default_pagination_callback
         self.http_hook = None

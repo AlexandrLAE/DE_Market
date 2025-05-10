@@ -52,6 +52,7 @@ with  DAG('dag_ETL_ozon',
             page_size=10,
             end_pages=500,
             delay_between_pages=5,
+            replace=True,
             dag=dag)
 
 check_s3 >> pload_data
