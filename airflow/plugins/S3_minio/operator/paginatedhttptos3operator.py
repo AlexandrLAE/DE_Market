@@ -104,8 +104,7 @@ class PaginatedHttpToS3Operator(SimpleHttpOperator):
                 # Формируем S3 ключ
                 s3_key = self.s3_key.format(
                     page=page,
-                    **context,
-                    **{'ti': context['ti']}
+                    **context
                 )
                 
                 # Загружаем в S3
