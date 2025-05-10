@@ -28,7 +28,7 @@ def _custom_pagination_callback(response):
             data = response.json()
             if data["result"]["page_count"]==0:
                 return False
-            return False
+            return True
         except (json.JSONDecodeError, AttributeError):
             return False
 
