@@ -1,6 +1,7 @@
 from typing import Optional, Dict, Any
 from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
+from airflow.providers.http.hooks.http import HttpHook
 from airflow.models import BaseOperator
 import json
 import time
@@ -47,6 +48,7 @@ class PaginatedHttpToS3Operator(SimpleHttpOperator):
         self.start_page = start_page
         self.delay_between_pages = delay_between_pages
         self.pagination_callback = pagination_callback or self.default_pagination_callback
+        self.http_hook = None
         
     def default_pagination_callback(self, response: Any) -> bool:
         """Определяет по умолчанию есть ли следующая страница"""
@@ -64,8 +66,17 @@ class PaginatedHttpToS3Operator(SimpleHttpOperator):
         except (json.JSONDecodeError, AttributeError):
             return False
     
+    def get_http_hook(self):
+        """Инициализирует и возвращает HTTP hook"""
+        if self.http_hook is None:
+            self.http_hook = HttpHook(
+                method=self.method,
+                http_conn_id=self.http_conn_id
+            )
+        return self.http_hook
+
     def execute(self, context: Dict):
-        http_hook = self.hook
+        http_hook = self.get_http_hook()
         s3_hook = S3Hook(aws_conn_id=self.s3_conn_id)
         has_more = True
         page = self.start_page
