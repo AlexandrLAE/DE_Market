@@ -27,11 +27,12 @@ default_args = {
 
 with  DAG('dag_ETL_ozon', 
         #owner="market",
-        # start_date=datetime(2025, 5, 1),
+        #start_date=datetime(2025, 5, 1),
         schedule_interval='0 0 * * *', 
         #catchup=True,
         max_active_tasks=2, 
         max_active_runs=1, 
+         default_args=default_args,
         tags=["market", "dowload"]
     ) as dag:
  
