@@ -18,7 +18,7 @@ def get_api_dates(**context):
         "end_date": end_date.isoformat(timespec="milliseconds") + "Z",
     }
 
-def _custom_pagination_callback(self, response: Any) -> bool:
+def _custom_pagination_callback(response):
         """Определяет по умолчанию есть ли следующая страница"""
         if response.status_code != 200:
             return False
