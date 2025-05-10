@@ -6,7 +6,7 @@ from S3_minio.operator.paginatedhttptos3operator import PaginatedHttpToS3Operato
 from S3_minio.sensor.s3connectionsensor import S3ConnectionSensor
 
 def get_api_dates(**context):
-    logical_date = context["data_interval_start"]  # Например: 2024-05-20 01:00:00
+    logical_date = context["data_interval_start"]  
     
     # Расчёт дат
     start_date = logical_date.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -53,8 +53,8 @@ with  DAG('dag_ETL_ozon',
             data=json.dumps({
                 "filter": {
                 "date": {
-                "from": "{{ data_interval_start.replace(hour=0, minute=0, second=0, microsecond=0).isoformat(timespec='milliseconds') + 'Z' }}",
-                "to": "{{ data_interval_start.replace(hour=23, minute=59, second=59, microsecond=999).isoformat(timespec='milliseconds') + 'Z' }}"
+                "from": "{{ data_interval_start.replace(hour=0, minute=0, second=0, microsecond=0).strftime('%Y-%m-%dT%H:%M:%S.000Z') }}",
+                "to": "{{ data_interval_start.replace(hour=23, minute=59, second=59, microsecond=999).strftime('%Y-%m-%dT%H:%M:%S.999Z') }}"
                 },
                 "operation_type": [ ],
                 "posting_number": "",
