@@ -18,6 +18,20 @@ def get_api_dates(**context):
         "end_date": end_date.isoformat(timespec="milliseconds") + "Z",
     }
 
+def _custom_pagination_callback(self, response: Any) -> bool:
+        """Определяет по умолчанию есть ли следующая страница"""
+        if response.status_code != 200:
+            return False
+        if not response.text.strip():
+            return False
+        try:
+            data = response.json()
+            if data["result"]["page_count"]==0:
+                return False
+            return False
+        except (json.JSONDecodeError, AttributeError):
+            return False
+
 default_args = {
     "owner": "airflow",
     "depends_on_past": False,
@@ -74,6 +88,7 @@ with  DAG('dag_ETL_ozon',
             end_pages=500,
             delay_between_pages=5,
             replace=True,
+            pagination_callback=_custom_pagination_callback,
             dag=dag)
 
 check_s3 >> pload_data
