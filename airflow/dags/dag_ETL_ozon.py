@@ -5,9 +5,29 @@ from datetime import datetime
 from S3_minio.operator.paginatedhttptos3operator import PaginatedHttpToS3Operator
 from S3_minio.sensor.s3connectionsensor import S3ConnectionSensor
 
+def get_api_dates(**context):
+    logical_date = context["data_interval_start"]  # Например: 2024-05-20 01:00:00
+    
+    # Расчёт дат
+    start_date = logical_date.replace(hour=0, minute=0, second=0, microsecond=0)
+    end_date = logical_date.replace(hour=23, minute=59, second=59, microsecond=999)
+    
+    # Форматирование в ISO 8601 с UTC (Z)
+    return {
+        "start_date": start_date.isoformat(timespec="milliseconds") + "Z",
+        "end_date": end_date.isoformat(timespec="milliseconds") + "Z",
+    }
+
+default_args = {
+    "owner": "airflow",
+    "depends_on_past": False,
+    "start_date": datetime(2025, 5, 1),
+    "retries": 1,
+}
+
 with  DAG('dag_ETL_ozon', 
         #owner="market",
-        start_date=datetime(2025, 5, 1),
+        # start_date=datetime(2025, 5, 1),
         schedule_interval='0 0 * * *', 
         #catchup=True,
         max_active_tasks=2, 
@@ -32,8 +52,8 @@ with  DAG('dag_ETL_ozon',
             data=json.dumps({
                 "filter": {
                 "date": {
-                "from": "2025-03-27T00:00:00.000Z",
-                "to": "2025-03-28T00:00:00.000Z"
+                "from": "{{ data_interval_start.replace(hour=0, minute=0, second=0, microsecond=0).isoformat(timespec='milliseconds') + 'Z' }}",
+                "to": "{{ data_interval_start.replace(hour=23, minute=59, second=59, microsecond=999).isoformat(timespec='milliseconds') + 'Z' }}"
                 },
                 "operation_type": [ ],
                 "posting_number": "",
