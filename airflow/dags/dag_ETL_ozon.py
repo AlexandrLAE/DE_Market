@@ -33,7 +33,7 @@ def _custom_pagination_callback(response):
             return False
 
 default_args = {
-    "owner": "airflow",
+    "owner": "market",
     "depends_on_past": False,
     "start_date": datetime(2024, 10, 1),
     "retries": 1,
@@ -43,10 +43,10 @@ with  DAG('dag_ETL_ozon',
         #owner="market",
         #start_date=datetime(2024, 10, 1),
         schedule_interval='0 0 * * *', 
-        #catchup=True,
+        catchup=True,
         max_active_tasks=2, 
         max_active_runs=1, 
-         default_args=default_args,
+        default_args=default_args,
         tags=["market", "dowload"]
     ) as dag:
  
