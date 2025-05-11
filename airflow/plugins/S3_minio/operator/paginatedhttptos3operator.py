@@ -101,29 +101,33 @@ class PaginatedHttpToS3Operator(SimpleHttpOperator):
                     data=json.dumps(payload),
                     headers=self.headers
                 )
+                
                 response.raise_for_status()
-                
-                # Формируем S3 ключ
-                s3_key = self.s3_key.format(
-                    page=page,
-                    **context
-                )
-                
-                # Загружаем в S3
-                s3_hook.load_string(
-                    string_data=response.text,
-                    key=s3_key,
-                    bucket_name=self.s3_bucket,
-                    replace=self.replace
-                )
-                self.log.info(f"Successfully uploaded page {page} to s3://{self.s3_bucket}/{s3_key}")
                 
                 # Проверяем есть ли еще данные
                 has_more = self.pagination_callback(response)
-                page += 1
+                
                 
                 # Пауза между запросами
                 if has_more and self.delay_between_pages > 0:
+                    # Формируем S3 ключ
+                    s3_key = self.s3_key.format(
+                        page=page,
+                        **context
+                    )
+                    
+                    # Загружаем в S3
+                    s3_hook.load_string(
+                        string_data=response.text,
+                        key=s3_key,
+                        bucket_name=self.s3_bucket,
+                        replace=self.replace
+                    )
+                    
+                    self.log.info(f"Successfully uploaded page {page} to s3://{self.s3_bucket}/{s3_key}")
+
+                    page += 1
+
                     time.sleep(self.delay_between_pages)
                     
             except Exception as e:
